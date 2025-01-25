@@ -1,6 +1,5 @@
-import styles from './XButton.module.css';
 import classNames from 'classnames';
-import {XIcon} from '../Icon/XIcon';
+import styles from './XButton.module.css';
 
 // todo add icon support for iconRight
 export function XButton ({children, color, rounded, size, block, icon, iconRight, className, disabled, ...props}) {
