@@ -1,4 +1,7 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
 
 @layer base {
   body {
@@ -23,8 +26,3 @@
     background: #006a9b;
   }
 }
-
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
-
