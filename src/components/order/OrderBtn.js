@@ -1,22 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_TYPE } from '../../actions';
-import { selectOrderBy } from '../../selectors';
-import { XBtn, XIcon } from '../ui';
+import { useContext } from 'react';
+
+import { XButton } from '../ui/Button/XButton';
+import { XIcon } from '../ui/Icon/XIcon';
+
+import { OrderContext } from './OrderContext';
 
 export function OrderBtn() {
-	const dispatch = useDispatch();
-	const sort = useSelector(selectOrderBy);
+	const [sort, setSort] = useContext(OrderContext);
+
 	const onClickSort = () => {
 		if (sort === 'asc') {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: 'desc' });
+			setSort('desc');
 		} else if (sort === 'desc') {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: false });
+			setSort(false);
 		} else {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: 'asc' });
+			setSort('asc');
 		}
 	};
+
 	return (
-		<XBtn icon={true} onClick={onClickSort}>
+		<XButton icon={true} onClick={onClickSort}>
 			<XIcon>
 				{sort === 'asc'
 					? 'mdi-sort-ascending'
@@ -24,6 +27,6 @@ export function OrderBtn() {
 						? 'mdi-sort-descending'
 						: 'mdi-sort'}
 			</XIcon>
-		</XBtn>
+		</XButton>
 	);
 }
