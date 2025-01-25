@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/**/*.{html,js,jsx}"
   ],
@@ -11,11 +12,14 @@ module.exports = {
         'info': '#2196f3',
         'warning': '#fb8c00',
         'success': '#4caf50',
-        'error': '#dc3545',
+        'danger': '#dc3545',
         'dark': '#1d1d1d',
         'surface': '#15171e',
         'dimmed': 'rgba(0, 0, 0, .4)',
         'divider': 'rgba(255, 255, 255, 0.15)',
+      },
+      boxShadow: {
+        strong: '0 4px 18px -2px #000000b3'
       }
     }
   },

@@ -17,6 +17,9 @@
 .list-item {
   @apply mt-1 flex w-full items-center justify-between bg-dimmed hover:bg-white/10 py-2 px-4 border border-divider shadow
 }
+.actions {
+  @apply flex space-x-2
+}
 
 .loader {
   position: fixed;
