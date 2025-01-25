@@ -1,0 +1,30 @@
+@tailwind base;
+
+@layer base {
+  body {
+      background-color: #002650;
+      color: rgba(255,255,255, .7);
+  }
+  a {
+      color: #00aeff;
+       text-decoration: none;
+  }
+  a:hover {
+      color: #fff;
+      text-decoration: underlined;
+  }
+  * {
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
+    scrollbar-width: thin
+  }
+  *::-moz-selection,
+  *::selection {
+    color: #eee;
+    background: #006a9b;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
