@@ -39,6 +39,12 @@ export const useTodos = create((set, get) => ({
 		});
 	},
 	add: (payload) => {
+		if (!payload.title.trim()) {
+			set({
+				error: 'Неможет быть пустым!',
+			});
+			return;
+		}
 		set({ isLoading: true });
 		todoRepository
 			.post({ isDone: false, ...payload })
@@ -46,6 +52,7 @@ export const useTodos = create((set, get) => ({
 			.then((res) => {
 				set({
 					todos: [{ ...res }, ...get().todos],
+					error: null,
 				});
 			})
 			.finally(() => set({ isLoading: false }));

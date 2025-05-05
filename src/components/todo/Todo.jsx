@@ -4,7 +4,7 @@ import { XBtn, XIcon, XInput } from '../ui';
 import styles from './Todo.module.css';
 export function Todo({ id, title }) {
 	const [newTitle, setNewitTitle] = useState(title);
-	const { editId, setEditId, remove, update } = useTodos();
+	const { editId, setEditId, error, remove, update } = useTodos();
 	const isEditing = editId === id;
 	const onDelete = () => {
 		if (confirm('Вы уверены, что хотите удалить?')) {
@@ -31,10 +31,18 @@ export function Todo({ id, title }) {
 	return (
 		<li className={styles.item}>
 			{isEditing ? (
-				<XInput value={newTitle} onChange={onChange} onKeyPress={onKeyPress} />
+				<>
+					<XInput
+						value={newTitle}
+						onChange={onChange}
+						onKeyPress={onKeyPress}
+					/>
+					{error && <p className="text-negative">{error}</p>}
+				</>
 			) : (
 				title
 			)}
+
 			<div className={styles.actions}>
 				{isEditing ? (
 					<>
