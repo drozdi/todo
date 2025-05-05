@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_TYPE, delTodoAction, updateTodoAction } from '../../actions';
-import { selectEditId, selectIsLoading } from '../../selectors';
+import { useTodos } from '../../store/todos';
 import { XBtn, XIcon, XInput } from '../ui';
 import styles from './Todo.module.css';
 export function Todo({ id, title }) {
-	const dispatch = useDispatch();
-	const isLoading = useSelector(selectIsLoading);
-	const isEditing = useSelector(selectEditId) === id;
 	const [newTitle, setNewitTitle] = useState(title);
+	const { editId, setEditId, remove, update } = useTodos();
+	const isEditing = editId === id;
 	const onDelete = () => {
-		dispatch(delTodoAction(id));
+		if (confirm('Вы уверены, что хотите удалить?')) {
+			remove(id);
+		}
 	};
 	const onEdit = () => {
-		dispatch({ type: ACTION_TYPE.EDIT_TODO, payload: id });
+		setEditId(id);
 	};
 	const onChange = ({ target }) => {
 		setNewitTitle(target.value);
@@ -23,12 +22,11 @@ export function Todo({ id, title }) {
 			onSave();
 		}
 	};
-
 	const onSave = () => {
-		dispatch(updateTodoAction({ id, title: newTitle }));
+		update({ id, title: newTitle });
 	};
 	const onCancel = () => {
-		dispatch({ type: ACTION_TYPE.EDIT_TODO, payload: null });
+		setEditId(null);
 	};
 	return (
 		<li className={styles.item}>

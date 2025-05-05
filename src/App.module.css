@@ -1,9 +1,5 @@
-.app {
-	@apply max-w-screen-sm my-5 mx-auto;
-}
-
 .container {
-	@apply mt-4;
+	@apply max-w-screen-sm my-5 mx-auto flex flex-col gap-3;
 }
 
 .heading {

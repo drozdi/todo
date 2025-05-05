@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTodoAction } from '../../actions';
+import { useTodos } from '../../store/todos';
 import { XInput } from '../ui';
 export function Create() {
-	const dispatch = useDispatch();
+	const { add } = useTodos();
 	const [title, setTitle] = useState('');
 	const onChange = ({ target }) => {
 		setTitle(target.value);
 	};
 	const onKeyPress = ({ key }) => {
 		if (key === 'Enter') {
-			dispatch(addTodoAction(title));
+			add({
+				title: title.trim(),
+			});
 			setTitle('');
 		}
 	};

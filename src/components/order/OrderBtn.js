@@ -1,26 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_TYPE } from '../../actions';
-import { selectOrderBy } from '../../selectors';
+import { useTodos } from '../../store/todos';
 import { XBtn, XIcon } from '../ui';
 
 export function OrderBtn() {
-	const dispatch = useDispatch();
-	const sort = useSelector(selectOrderBy);
+	const { orderBy, setOrderBy } = useTodos();
 	const onClickSort = () => {
-		if (sort === 'asc') {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: 'desc' });
-		} else if (sort === 'desc') {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: false });
+		if (orderBy === 'asc') {
+			setOrderBy('desc');
+		} else if (orderBy === 'desc') {
+			setOrderBy(false);
 		} else {
-			dispatch({ type: ACTION_TYPE.SET_ORDER_BY, payload: 'asc' });
+			setOrderBy('asc');
 		}
 	};
 	return (
 		<XBtn icon={true} onClick={onClickSort}>
 			<XIcon>
-				{sort === 'asc'
+				{orderBy === 'asc'
 					? 'mdi-sort-ascending'
-					: sort === 'desc'
+					: orderBy === 'desc'
 						? 'mdi-sort-descending'
 						: 'mdi-sort'}
 			</XIcon>

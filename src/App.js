@@ -1,19 +1,14 @@
-import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadTodoAction } from './actions';
+import { useEffect, useMemo } from 'react';
 import styles from './App.module.css';
 import { Create } from './components/create';
 import { OrderBtn } from './components/order';
 import { Search } from './components/search';
 import { Todo } from './components/todo';
-import { selectIsLoading, selectOrderBy, selectSearch, selectTodos } from './selectors';
+import { useTodos } from './store/todos';
 
 function App() {
-	const dispatch = useDispatch();
-	const todos = useSelector(selectTodos);
-	const isLoading = useSelector(selectIsLoading);
-	const search = useSelector(selectSearch);
-	const orderBy = useSelector(selectOrderBy);
+	const { todos, isLoading, fetchTodos, search, orderBy } = useTodos();
+
 	const computedTodos = useMemo(() => {
 		let newTodos = [...todos];
 		if (search) {
@@ -28,39 +23,38 @@ function App() {
 	}, [todos, search, orderBy]);
 
 	useEffect(() => {
-		dispatch(loadTodoAction());
+		fetchTodos();
 	}, []);
 
 	return (
-		<div className={styles.app}>
-			<div className={styles.container}>
-				<div className="grid grid-cols-12 gap-4">
-					<div className="col-span-7">
-						<Create />
-					</div>
-					<div className="col-span-4">
-						<Search />
-					</div>
-					<div className="col-span-1">
-						<OrderBtn />
-					</div>
+		<div className={styles.container}>
+			<div className="flex gap-3">
+				<div className="flex-auto">
+					<Create />
 				</div>
-				{isLoading ? (
-					<div className={styles.loader}></div>
-				) : (
-					<>
-						<h2 className={styles.heading}>Список:</h2>
-						{!computedTodos.length && (
-							<p className="text-center text-9xl">Пусто</p>
-						)}
-						<ul className={styles.list}>
-							{computedTodos.map((item) => {
-								return <Todo key={item.id} {...item} />;
-							})}
-						</ul>
-					</>
-				)}
+				<div className="flex-auto">
+					<Search />
+				</div>
+				<div className="flex-none content-center items-center justify-center">
+					<OrderBtn />
+				</div>
 			</div>
+
+			{isLoading ? (
+				<div className={styles.loader}></div>
+			) : (
+				<>
+					<h2 className={styles.heading}>Список:</h2>
+					{!computedTodos.length && (
+						<p className="text-center text-9xl">Пусто</p>
+					)}
+					<ul className={styles.list}>
+						{computedTodos.map((item) => {
+							return <Todo key={item.id} {...item} />;
+						})}
+					</ul>
+				</>
+			)}
 		</div>
 	);
 }
